@@ -93,7 +93,7 @@ class P_Attaque :
       print('Vous attaquez votre adversaire sur sa faiblesse ! La puissance de votre attaque est augmentée de 20%.')
     pdvA = int(pdvA)
     pokemon.pdv = pokemon.pdv - pdvA
-    print('Points de vie de  % s : %s' % (pokemon.nom, pokemon.pdv))
+    print('Points de vie de  % s : % s' % (pokemon.nom, pokemon.pdv))
 
 class Match :
   def __init__(self, pokemonA, pokemonB) :
