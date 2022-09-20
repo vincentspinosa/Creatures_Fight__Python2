@@ -147,7 +147,6 @@ class Turn :
       i = 0
       while (i < len(p_turn.attaques)) :
         print('% s : % s, Type : % s, Dégâts : % s' % (i, p_turn.attaques[i].nom, p_turn.attaques[i].a_type.nom, p_turn.attaques[i].pdv))
-        #print('% s : % s, Type : % s, Dégâts (en points de vie) : % s' % (i, p_turn.attaques[i].nom, p_turn.attaques[i].a_type.nom, p_turn.attaque[i].pdv))
         i += 1
       nbAttaque = int(input('\nEntrez le nombre associé à l\'attaque choisie : '))
       if (nbAttaque < 0 or nbAttaque >= len(p_turn.attaques)) :
