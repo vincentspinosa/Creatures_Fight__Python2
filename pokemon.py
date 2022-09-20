@@ -11,8 +11,6 @@ class Type :
   def __repr__(self) :
     return "Index : % s, Nom : % s, Faiblesse : % s" % (self.index, self.nom, self.faiblesse)
 
-#TYPES
-
 Feu = Type(0, "feu", 1)
 #Feu.__repr__()
 
@@ -50,7 +48,8 @@ class Attaque :
     self.pdv = pdv
 
   def __repr__(self) :
-    return "Type : % s, Nom : % s, Points de vie : %s" % (self.a_type, self.nom, self.pdv)
+    return "Type : % s, Nom : % s, Points de vie : % s" % (self.a_type, self.nom, self.pdv)
+
 
 #ATTAQUES
 
@@ -72,6 +71,7 @@ Eclair = Attaque(2, 'Éclair', 20)
 Tonnerre = Attaque(2, 'Tonnerre', 40)
 #Tonnerre.__repr__()
 
+
 #POKEMONS
 
 Dracofeu = Pokemon(0, 'Dracofeu', 120, [Lance_Flammes, Dracogriffe], 1)
@@ -82,6 +82,42 @@ Tortank = Pokemon(1, 'Tortank', 130, [Double_canon, Hydroqueue], 2)
 
 Pikachu = Pokemon(2, 'Pikachu', 100, [Eclair, Tonnerre], 0)
 #Pikachu.__repr__()
+
+pokemons_liste = [Dracofeu, Tortank, Pikachu]
+
+
+#MATCH : définition
+
+class PokemonsDispo :
+  def __init__(self) :
+    print('Pokémons disponibles :')
+    i = 0
+    while (i < len(pokemons_liste)) :
+      print('% s : % s' % (i, pokemons_liste[i]))
+      i += 1
+
+class ChoixPokemons :
+  def __init__(self) :
+    print('Choix du premier pokémon :')
+    PokemonsDispo()
+    pA = int(input('Numéro du premier pokemon : '))
+    if (pA < 0 or pA >= len(pokemons_liste)) :
+      pA = 0
+    print('Vous avez choisi % s' % (pA))
+    print('Choix du second pokémon :')
+    PokemonsDispo()
+    pB = int(input('Numéro du second pokémon : '))
+    if (pB < 0 or pB >= len(pokemons_liste)) :
+      pB = 0
+    print('Vous avez choisi % s' % (pB))
+    self.pokemonA = pokemons_liste[pA]
+    self.pokemonB = pokemons_liste[pB]
+
+class Depart :
+  def __init__(self, pokemonA, pokemonB) :
+    print('Que le match entre ' + pokemonA.nom + ' et ' + pokemonB.nom + ' commence !')
+    print('% s a % s points de vie.' % (pokemonA.nom, pokemonA.pdv))
+    print('% s a % s points de vie.' % (pokemonB.nom, pokemonB.pdv))
 
 class P_Attaque :
   def __init__(self, attaque, pokemon) :
@@ -95,15 +131,8 @@ class P_Attaque :
     pokemon.pdv = pokemon.pdv - pdvA
     print('Points de vie de  % s : % s' % (pokemon.nom, pokemon.pdv))
 
-class Match :
-  def __init__(self, pokemonA, pokemonB) :
-    pdvA = pokemonA.pdv
-    pdvB = pokemonB.pdv
-    print('Que le match entre ' + pokemonA.nom + ' et ' + pokemonB.nom + ' commence !')
-    print('% s a % s points de vie.' % (pokemonA.nom, pokemonA.pdv))
-    print('% s a % s points de vie.' % (pokemonB.nom, pokemonB.pdv))
-    counter = 1
-    while (pokemonA.pdv > 0 and pokemonB.pdv > 0) :
+class Turn :
+  def __init__(self, counter, pokemonA, pokemonB) :
       if (counter % 2 == 1) :
         p_turn = pokemonA
         p_att = pokemonB
@@ -114,7 +143,7 @@ class Match :
       print('Attaques de ' + p_turn.nom + ' : ')
       i = 0
       while (i < len(p_turn.attaques)) :
-        print('% s : %s' % (i, p_turn.attaques[i]))
+        print('% s : % s' % (i, p_turn.attaques[i]))
         i += 1
       nbAttaque = int(input('Entrez le nombre équivalent à l\'attaque choisie : '))
       if (nbAttaque < 0 or nbAttaque >= len(p_turn.attaques)) :
@@ -122,7 +151,9 @@ class Match :
       attaqueChoisie = p_turn.attaques[nbAttaque]
       print(attaqueChoisie)
       P_Attaque(attaqueChoisie, p_att)
-      counter += 1
+
+class Resultat :
+  def __init__(self, pokemonA, pokemonB) :
     if (pokemonA.pdv > pokemonB.pdv) :
       vainqueur = pokemonA
       print(pokemonA.nom + ' gagne !')
@@ -132,7 +163,38 @@ class Match :
     else :
       vainqueur = pokemonB
       print(pokemonB.nom + ' gagne !')
+
+class NouveauMatch :
+  def __init__(self, pokemonA, pokemonB) :
+    nbQuestion = int(input('Voulez vous faire un nouveau match ?\n 0 : Oui, avec les mêmes pokemons !\n 1 : Oui, en inversant les pokemons !\n 2 : Oui, en choisissant de nouveaux Pokémons !\n 3 : Non.\n'))
+    if (nbQuestion == 0) :
+      Match(pokemonA, pokemonB)
+    elif (nbQuestion == 1) :
+      Match(pokemonB, pokemonA)
+    elif (nbQuestion == 2) :
+      Match()
+    elif (nbQuestion == 3) :
+      print('Au revoir !')
+
+class Match :
+  def __init__(self, pokemonA=None, pokemonB=None) :
+    if (pokemonA == None) :
+      pokes = ChoixPokemons()
+      pokemonA = pokes.pokemonA
+      pokemonB = pokes.pokemonB
+    pdvA = pokemonA.pdv
+    pdvB = pokemonB.pdv
+    Depart(pokemonA, pokemonB)
+    counter = 1
+    while (pokemonA.pdv > 0 and pokemonB.pdv > 0) :
+      Turn(counter, pokemonA, pokemonB)
+      counter += 1
+    Resultat(pokemonA, pokemonB)
     pokemonA.pdv = pdvA
     pokemonB.pdv = pdvB
+    NouveauMatch(pokemonA, pokemonB)
 
-Match(Pikachu, Tortank)
+
+#JEU
+
+Match()
