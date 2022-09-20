@@ -103,14 +103,14 @@ class ChoixPokemons :
     if (pA < 0 or pA >= len(pokemons_liste)) :
       pA = 0
     print('\nVous avez choisi % s !' % (pokemons_liste[pA].nom))
-    time.sleep(0.5)
+    time.sleep(0.7)
     print('\nChoix du second pokémon :')
     PokemonsDispo(pokemons_liste[pA])
     pB = int(input('\nNuméro du second pokémon : '))
     if (pB < 0 or pB >= len(pokemons_liste)) :
       pB = 0
     print('\nVous avez choisi % s.' % (pokemons_liste[pB].nom))
-    time.sleep(0.5)
+    time.sleep(0.7)
     self.pokemonA = pokemons_liste[pA]
     self.pokemonB = pokemons_liste[pB]
 
@@ -126,11 +126,11 @@ class P_Attaque :
     if (attaque.a_type.nom == pokemon.p_type.faiblesse) :
       pdvA *= 1.2
       print('\nVous attaquez votre adversaire sur sa faiblesse ! La puissance de votre attaque est augmentée de 20%.')
-      time.sleep(0.4)
+      time.sleep(0.8)
     pdvA = int(pdvA)
     pokemon.pdv = pokemon.pdv - pdvA
     print('\nPoints de vie de % s : % s' % (pokemon.nom, pokemon.pdv))
-    time.sleep(0.5)
+    time.sleep(0.6)
 
 class Turn :
   def __init__(self, counter, pokemonA, pokemonB) :
@@ -141,9 +141,9 @@ class Turn :
         p_turn = pokemonB
         p_att = pokemonA
       print('\nAu tour de ' + p_turn.nom + ' !')
-      time.sleep(0.4)
+      time.sleep(0.6)
       print('\nAttaques de ' + p_turn.nom + ' : \n')
-      time.sleep(0.4)
+      time.sleep(0.6)
       i = 0
       while (i < len(p_turn.attaques)) :
         print('% s : % s, Type : % s, Dégâts : % s' % (i, p_turn.attaques[i].nom, p_turn.attaques[i].a_type.nom, p_turn.attaques[i].pdv))
@@ -153,16 +153,16 @@ class Turn :
         nbAttaque = 0
       attaqueChoisie = p_turn.attaques[nbAttaque]
       print('\n% s utilise % s !' % (p_turn.nom, attaqueChoisie.nom))
-      time.sleep(0.4)
+      time.sleep(0.6)
       P_Attaque(attaqueChoisie, p_att)
 
 class TurnOrdi :
   def __init__(self, counter, pokemonA, pokemonB) :
       p_turn = pokemonB
       p_att = pokemonA
-      time.sleep(0.4)
+      time.sleep(0.6)
       print('\nAu tour de ' + p_turn.nom + ' !')
-      time.sleep(1.5)
+      time.sleep(0.8)
       attaqueChoisie = p_turn.attaques[random.randint(0, len(p_turn.attaques) - 1)]
       print('\n% s utilise % s !' % (p_turn.nom, attaqueChoisie.nom))
       time.sleep(0.8)
@@ -182,7 +182,7 @@ class Resultat :
 
 class NouveauMatch :
   def __init__(self, pokemonA, pokemonB) :
-    print('\nVoulez-vous faire un nouveau match ?')
+    #print('\nVoulez-vous faire un nouveau match ?')
     print('\n0 : Nouveau match - mêmes Pokémons !') 
     print('1 : Nouveau match - Pokémons inversés !')
     print('2 : Nouveau match - nouveaux Pokémons !')
