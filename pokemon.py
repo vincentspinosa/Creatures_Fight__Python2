@@ -53,7 +53,7 @@ class Attaque :
     return "Type : % s, Nom : % s, Points de vie : % s" % (self.a_type, self.nom, self.pdv)
 
 
-#ATTAQUES
+#ATTAQUES :
 
 Lance_Flammes = Attaque(0, 'Lance-Flammes', 50)
 #Lance_Flammes.__repr__()
@@ -74,7 +74,7 @@ Tonnerre = Attaque(2, 'Tonnerre', 40)
 #Tonnerre.__repr__()
 
 
-#POKEMONS
+#POKEMONS :
 
 Dracofeu = Pokemon(0, 'Dracofeu', 120, [Lance_Flammes, Dracogriffe])
 #Dracofeu.__repr__()
@@ -88,7 +88,7 @@ Pikachu = Pokemon(2, 'Pikachu', 100, [Eclair, Tonnerre])
 pokemons_liste = [Dracofeu, Tortank, Pikachu]
 
 
-#MATCH : définition
+#MATCH : (définition)
 
 class PokemonsDispo :
   def __init__(self, pokemonA=None) :
@@ -177,7 +177,7 @@ class TurnOrdi :
   def __init__(self, counter, pokemonA, pokemonB) :
       p_turn = pokemonB
       p_att = pokemonA
-      time.sleep(0.6)
+      time.sleep(0.2)
       print('\nAU TOUR DE ' + p_turn.nom.upper() + ' !')
       time.sleep(0.6)
       attaqueChoisie = p_turn.attaques[random.randint(0, len(p_turn.attaques) - 1)]
@@ -259,7 +259,7 @@ class Match :
     return None
 
 
-#MENU PRINCIPAL
+#MENU PRINCIPAL :
 
 class Menu :
   def __init__(self, valeur=None) :
@@ -283,7 +283,7 @@ class Menu :
     return None
 
 
-#INTRODUCTION AU JEU
+#INTRODUCTION AU JEU :
 
 class Introduction() :
   def __init__(self) :
@@ -295,7 +295,7 @@ class Introduction() :
     return None
 
 
-#CHECK_ARGV
+#CHECK_ARGV :
 
 class Check_Argv() :
   def __init__(self) :
@@ -307,7 +307,7 @@ class Check_Argv() :
     return None
 
 
-#MAIN
+#MAIN :
 
 class Main() :
   def __init__(self) :
