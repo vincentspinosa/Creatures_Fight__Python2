@@ -307,6 +307,14 @@ class Check_Argv() :
     return None
 
 
+#MAIN
+
+class Main() :
+  def __init__(self) :
+    Check_Argv()
+    return None
+
+
 #JEU :
 
-Check_Argv()
+Main()
