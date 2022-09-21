@@ -2,12 +2,14 @@
 
 import time
 import random
+import sys
 
 class Type :
   def __init__(self, index, nom, faiblesse) :
     self.index = index
     self.nom = nom
     self.faiblesse = faiblesse
+    return None
 
   def __repr__(self) :
     return "Index : % s, Nom : % s, Faiblesse : % s" % (self.index, self.nom, self.faiblesse)
@@ -32,6 +34,7 @@ class Pokemon :
     self.nom = nom
     self.pdv = pdv
     self.attaques = attaques
+    return None
 
   def __repr__(self) :
     return "Type : % s, Nom : % s, Points de vie : % s, Attaques : % s, Faiblesse : % s" % (self.p_type, self.nom, self.pdv, self.attaques, self.faiblesse)
@@ -44,6 +47,7 @@ class Attaque :
     self.a_type = types[a_type]
     self.nom = nom
     self.pdv = pdv
+    return None
 
   def __repr__(self) :
     return "Type : % s, Nom : % s, Points de vie : % s" % (self.a_type, self.nom, self.pdv)
@@ -94,31 +98,40 @@ class PokemonsDispo :
       if (pokemonA == None or pokemons_liste[i] != pokemonA) :
         print('% s : % s, Points de vie : % s, Type : % s, Faiblesse : % s' % (i, pokemons_liste[i].nom, pokemons_liste[i].pdv, pokemons_liste[i].p_type.nom, pokemons_liste[i].p_type.faiblesse))
       i += 1
+    return None
 
 class ChoixPokemons :
   def __init__(self) :
-    print('\nChoix du premier pokémon :')
+    print('\nChoix du premier Pokémon :')
     PokemonsDispo()
-    pA = int(input('\nNuméro du premier pokemon : '))
+    pA = int(input('\nNuméro du premier Pokémon : '))
     if (pA < 0 or pA >= len(pokemons_liste)) :
       pA = 0
+    print(pA)
     print('\nVous avez choisi % s !' % (pokemons_liste[pA].nom))
     time.sleep(0.7)
-    print('\nChoix du second pokémon :')
+    print('\nChoix du second Pokémon :')
     PokemonsDispo(pokemons_liste[pA])
-    pB = int(input('\nNuméro du second pokémon : '))
-    if (pB < 0 or pB >= len(pokemons_liste)) :
-      pB = 0
+    pB = int(input('\nNuméro du second Pokémon : '))
+    if (pB < 0 or pB >= len(pokemons_liste) or pB) :
+        pB = 0
+    if (pA == pB) :
+      if (pA > 0) :
+        pB -= 1
+      else :
+        pB += 1
     print('\nVous avez choisi % s.' % (pokemons_liste[pB].nom))
     time.sleep(0.7)
     self.pokemonA = pokemons_liste[pA]
     self.pokemonB = pokemons_liste[pB]
+    return None
 
 class Depart :
   def __init__(self, pokemonA, pokemonB) :
     print('\nQue le match entre ' + pokemonA.nom + ' et ' + pokemonB.nom + ' commence !')
     print('\n% s a % s points de vie.' % (pokemonA.nom, pokemonA.pdv))
     print('% s a % s points de vie.' % (pokemonB.nom, pokemonB.pdv))
+    return None
 
 class P_Attaque :
   def __init__(self, attaque, pokemon) :
@@ -129,8 +142,11 @@ class P_Attaque :
       time.sleep(0.8)
     pdvA = int(pdvA)
     pokemon.pdv = pokemon.pdv - pdvA
+    if (pokemon.pdv < 0) :
+      pokemon.pdv = 0
     print('\nPoints de vie de % s : % s' % (pokemon.nom, pokemon.pdv))
     time.sleep(0.6)
+    return None
 
 class Turn :
   def __init__(self, counter, pokemonA, pokemonB) :
@@ -140,7 +156,7 @@ class Turn :
       else :
         p_turn = pokemonB
         p_att = pokemonA
-      print('\nAu tour de ' + p_turn.nom + ' !')
+      print('\nAU TOUR DE ' + p_turn.nom.upper() + ' !')
       time.sleep(0.6)
       print('\nAttaques de ' + p_turn.nom + ' : \n')
       time.sleep(0.6)
@@ -155,18 +171,20 @@ class Turn :
       print('\n% s utilise % s !' % (p_turn.nom, attaqueChoisie.nom))
       time.sleep(0.6)
       P_Attaque(attaqueChoisie, p_att)
+      return None
 
 class TurnOrdi :
   def __init__(self, counter, pokemonA, pokemonB) :
       p_turn = pokemonB
       p_att = pokemonA
       time.sleep(0.6)
-      print('\nAu tour de ' + p_turn.nom + ' !')
-      time.sleep(0.8)
+      print('\nAU TOUR DE ' + p_turn.nom.upper() + ' !')
+      time.sleep(0.6)
       attaqueChoisie = p_turn.attaques[random.randint(0, len(p_turn.attaques) - 1)]
       print('\n% s utilise % s !' % (p_turn.nom, attaqueChoisie.nom))
-      time.sleep(0.8)
+      time.sleep(0.6)
       P_Attaque(attaqueChoisie, p_att)
+      return None
 
 class Resultat :
   def __init__(self, pokemonA, pokemonB) :
@@ -179,10 +197,11 @@ class Resultat :
     else :
       vainqueur = pokemonB
       print('\n' + pokemonB.nom + ' gagne !')
+    return None
 
 class NouveauMatch :
-  def __init__(self, pokemonA, pokemonB) :
-    #print('\nVoulez-vous faire un nouveau match ?')
+  def __init__(self, pokemonA, pokemonB, Ordi=None) :
+    print('\nQue voulez-vous faire ?')
     print('\n0 : Nouveau match - mêmes Pokémons !') 
     print('1 : Nouveau match - Pokémons inversés !')
     print('2 : Nouveau match - nouveaux Pokémons !')
@@ -190,15 +209,26 @@ class NouveauMatch :
     print('4 : Quitter le jeu')
     nbQuestion = int(input('\nEntrez la valeur désirée : '))
     if (nbQuestion == 0) :
+      if (Ordi == 1) :
+        Match(pokemonA, pokemonB, Ordi=1)
+        return None
       Match(pokemonA, pokemonB)
     elif (nbQuestion == 1) :
+      if (Ordi == 1) :
+        Match(pokemonB, pokemonA, Ordi=1)
+        return None
       Match(pokemonB, pokemonA)
     elif (nbQuestion == 2) :
+      if (Ordi == 1) :
+        Match(Ordi=1)
+        return None
       Match()
     elif (nbQuestion == 4) :
       print('\nÀ bientôt !\n')
+      return None
     else :
       Menu()
+    return None
 
 class Match :
   def __init__(self, pokemonA=None, pokemonB=None, Ordi=None) :
@@ -219,23 +249,29 @@ class Match :
         else :
           TurnOrdi(counter, pokemonA, pokemonB)
       counter += 1
-    Resultat(pokemonA, pokemonB)
+    resultat = Resultat(pokemonA, pokemonB)
     pokemonA.pdv = pdvA
     pokemonB.pdv = pdvB
-    NouveauMatch(pokemonA, pokemonB)
+    if (Ordi == None) :
+      NouveauMatch(pokemonA, pokemonB)
+    else :
+      NouveauMatch(pokemonA, pokemonB, Ordi=1)
+    return None
 
 
 #MENU PRINCIPAL
 
 class Menu :
-  def __init__(self) :
-    print('\n\n\nPOKEMON___SHELL')
-    print('\nMenu Principal')
-    print('\n0 : Combattre - et contrôler les deux pokemons')
-    print('1 : Combattre - et jouer contre l\' ordinateur')
-    print('2 : Introduction au jeu')
-    print('3 : Quitter le jeu')
-    valeur = input('\nEntrez la valeur correspondante à l\'action désirée : ')
+  def __init__(self, valeur=None) :
+    print(valeur)
+    if (valeur == None) :
+      print('\n\n\nPOKEMON___SHELL')
+      print('\nMenu Principal')
+      print('\n0 : Combattre - et contrôler les deux Pokémons')
+      print('1 : Combattre - et jouer contre l\' ordinateur')
+      print('2 : Introduction au jeu')
+      print('3 : Quitter le jeu')
+      valeur = input('\nEntrez la valeur correspondante à l\'action désirée : ')
     if (valeur == 0) :
       Match()
     elif (valeur == 1) :
@@ -244,6 +280,7 @@ class Menu :
       Introduction()
     elif (valeur == 3) :
       print('\nÀ bientôt !\n')
+    return None
 
 
 #INTRODUCTION AU JEU
@@ -255,8 +292,21 @@ class Introduction() :
     print('\nAprès chaque combat, vous pourrez rejouer, en gardant les mêmes options de combat ou en les modifiant.')
     x = int(input('\nEntrez 0 pour revenir au menu principal : '))
     Menu()
+    return None
+
+
+#CHECK_ARGV
+
+class Check_Argv() :
+  def __init__(self) :
+    v = int(sys.argv[1])
+    if (v > 0 and v <= 4) :
+      Menu(v)
+    else :
+      Menu()
+    return None
 
 
 #JEU :
 
-Menu()
+Check_Argv()
