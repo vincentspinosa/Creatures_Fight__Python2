@@ -107,7 +107,6 @@ class ChoixPokemons :
     pA = int(input('\nNuméro du premier Pokémon : '))
     if (pA < 0 or pA >= len(pokemons_liste)) :
       pA = 0
-    print(pA)
     print('\nVous avez choisi % s !' % (pokemons_liste[pA].nom))
     time.sleep(0.7)
     print('\nChoix du second Pokémon :')
@@ -120,7 +119,7 @@ class ChoixPokemons :
         pB -= 1
       else :
         pB += 1
-    print('\nVous avez choisi % s.' % (pokemons_liste[pB].nom))
+    print('\nVous avez choisi % s !' % (pokemons_liste[pB].nom))
     time.sleep(0.7)
     self.pokemonA = pokemons_liste[pA]
     self.pokemonB = pokemons_liste[pB]
