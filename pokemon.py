@@ -104,14 +104,16 @@ class ChoixPokemons :
   def __init__(self) :
     print('\nChoix du premier Pokémon :')
     PokemonsDispo()
-    pA = int(input('\nNuméro du premier Pokémon : '))
+    pA = raw_input('\nNuméro du premier Pokémon : ')
+    pA = ord(pA[0]) - 48
     if (pA < 0 or pA >= len(pokemons_liste)) :
       pA = 0
     print('\nVous avez choisi % s !' % (pokemons_liste[pA].nom))
     time.sleep(0.7)
     print('\nChoix du second Pokémon :')
     PokemonsDispo(pokemons_liste[pA])
-    pB = int(input('\nNuméro du second Pokémon : '))
+    pB = raw_input('\nNuméro du second Pokémon : ')
+    pB = ord(pB[0]) - 48
     if (pB < 0 or pB >= len(pokemons_liste) or pB) :
         pB = 0
     if (pA == pB) :
@@ -163,7 +165,8 @@ class Turn :
       while (i < len(p_turn.attaques)) :
         print('% s : % s, Type : % s, Dégâts : % s' % (i, p_turn.attaques[i].nom, p_turn.attaques[i].a_type.nom, p_turn.attaques[i].pdv))
         i += 1
-      nbAttaque = int(input('\nEntrez le nombre associé à l\'attaque choisie : '))
+      nbAttaque = raw_input('\nEntrez le nombre associé à l\'attaque choisie : ')
+      nbAttaque = ord(nbAttaque[0]) - 48
       if (nbAttaque < 0 or nbAttaque >= len(p_turn.attaques)) :
         nbAttaque = 0
       attaqueChoisie = p_turn.attaques[nbAttaque]
@@ -206,7 +209,8 @@ class NouveauMatch :
     print('2 : Nouveau match - nouveaux Pokémons !')
     print('3 : Aller au menu principal')
     print('4 : Quitter le jeu')
-    nbQuestion = int(input('\nEntrez la valeur désirée : '))
+    nbQuestion = raw_input('\nEntrez la valeur désirée : ')
+    nbQuestion = ord(nbQuestion[0]) - 48
     if (nbQuestion == 0) :
       if (Ordi == 1) :
         Match(pokemonA, pokemonB, Ordi=1)
@@ -270,7 +274,8 @@ class Menu :
       print('1 : Combattre - et jouer contre l\' ordinateur')
       print('2 : Introduction au jeu')
       print('3 : Quitter le jeu')
-      valeur = input('\nEntrez la valeur correspondante à l\'action désirée : ')
+      valeur = raw_input('\nEntrez la valeur correspondante à l\'action désirée : ')
+      valeur = ord(valeur[0]) - 48
     if (valeur == 0) :
       Match()
     elif (valeur == 1) :
@@ -279,6 +284,8 @@ class Menu :
       Introduction()
     elif (valeur == 3) :
       print('\nÀ bientôt !\n')
+    else : 
+      Menu()
     return None
 
 
@@ -289,7 +296,8 @@ class Introduction() :
     print('\n\nIntroduction au jeu :')
     print('\nCe jeu simule un combat Pokémon. Vous pouvez choisir chaque Pokémon après avoir indiqué votre mode de jeu désiré.')
     print('\nAprès chaque combat, vous pourrez rejouer, en gardant les mêmes options de combat ou en les modifiant.')
-    x = int(input('\nEntrez 0 pour revenir au menu principal : '))
+    x = raw_input('\nEntrez une valeur pour revenir au menu principal : ')
+    x = ord(x[0]) - 48
     Menu()
     return None
 
