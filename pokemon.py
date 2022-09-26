@@ -288,7 +288,7 @@ class Menu :
 class Introduction() :
   def __init__(self) :
     print('\n\nIntroduction au jeu :')
-    print('\nCe jeu émule un combat Pokémon. Vous pouvez choisir chaque Pokémon après avoir indiqué votre mode de jeu désiré.')
+    print('\nCe jeu simule un combat Pokémon. Vous pouvez choisir chaque Pokémon après avoir indiqué votre mode de jeu désiré.')
     print('\nAprès chaque combat, vous pourrez rejouer, en gardant les mêmes options de combat ou en les modifiant.')
     x = int(input('\nEntrez 0 pour revenir au menu principal : '))
     Menu()
@@ -299,11 +299,12 @@ class Introduction() :
 
 class Check_Argv() :
   def __init__(self) :
-    v = int(sys.argv[1])
-    if (v > 0 and v <= 4) :
-      Menu(v)
-    else :
-      Menu()
+    if (len(sys.argv) > 1) :
+      v = int(sys.argv[1])
+      if (v > 0 and v <= 4) :
+        Menu(v)
+        return None
+    Menu()
     return None
 
 
