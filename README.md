@@ -5,5 +5,3 @@ Vous pouvez jouer de deux façons différentes : en contrôlant les deux Pokémo
 Dans chaque mode de jeu, vous pourrez choisir les deux Pokémons s'affrontant.
 
 Après chaque partie, vous pourrez rejouer le match avec les mêmes Pokémons, en les inversant ou en en choisissant des nouveaux, retourner au menu principal, ou quitter le jeu.
-
-Ce programme étant destiné à être le back-end d'un jeu proposant les inputs sous la forme de boutons cliquables, et cette version prenant les inputs dans le terminal, il est possible de le faire crasher. 
