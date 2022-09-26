@@ -307,7 +307,7 @@ class Introduction() :
 class Check_Argv() :
   def __init__(self) :
     if (len(sys.argv) > 1) :
-      v = int(sys.argv[1])
+      v = ord(sys.argv[1][0]) - 48
       if (v > 0 and v <= 4) :
         Menu(v)
         return None
