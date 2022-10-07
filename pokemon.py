@@ -3,9 +3,17 @@
 import time
 import random
 import sys
+import gc
+
+
+def appendAll(className, array):
+  for obj in gc.get_objects():
+    if (isinstance(obj, className)):
+      array.append(obj)
+
 
 class Type :
-  def __init__(self, index, nom, faiblesse) :
+  def __init__(self, index, nom, faiblesse):
     self.index = index
     self.nom = nom
     self.faiblesse = faiblesse
@@ -23,12 +31,14 @@ Eau = Type(1, "Eau", "Electrique")
 Electrique = Type(2, "Electrique", "Feu")
 #Electrique.__repr__()
 
-types = [Feu, Eau, Electrique]
+types = []
+appendAll(Type, types)
 
-class Pokemon :
-  def __init__(self, p_type, nom, pdv, attaques) :
+
+class Pokemon:
+  def __init__(self, p_type, nom, pdv, attaques):
     max_type_number = len(types)
-    if (p_type < 0 or p_type >= max_type_number) :
+    if (p_type < 0 or p_type >= max_type_number):
       self.p_type = types[0]
     self.p_type = types[p_type]
     self.nom = nom
@@ -39,10 +49,10 @@ class Pokemon :
   def __repr__(self) :
     return "Type : % s, Nom : % s, Points de vie : % s, Attaques : % s, Faiblesse : % s" % (self.p_type, self.nom, self.pdv, self.attaques, self.faiblesse)
 
-class Attaque :
+class Attaque:
   def __init__(self, a_type, nom, pdv) :
     max_type_number = len(types)
-    if (a_type < 0 or a_type >= max_type_number) :
+    if (a_type < 0 or a_type >= max_type_number):
       self.a_type = types[0]
     self.a_type = types[a_type]
     self.nom = nom
@@ -73,6 +83,9 @@ Eclair = Attaque(2, 'Éclair', 20)
 Tonnerre = Attaque(2, 'Tonnerre', 40)
 #Tonnerre.__repr__()
 
+liste_attaques = []
+appendAll(Attaque, liste_attaques)
+
 
 #POKEMONS :
 
@@ -85,7 +98,8 @@ Tortank = Pokemon(1, 'Tortank', 130, [Double_canon, Hydroqueue])
 Pikachu = Pokemon(2, 'Pikachu', 100, [Eclair, Tonnerre])
 #Pikachu.__repr__()
 
-pokemons_liste = [Dracofeu, Tortank, Pikachu]
+pokemons_liste = []
+appendAll(Pokemon, pokemons_liste)
 
 
 #MATCH : (définition)
